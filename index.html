@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bindery &amp; Co. — No. 041–050</title>
+<meta name="description" content="Ten books from a small print shop, numbered 041 through 050.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="wordmark" href="#top">Bindery &amp; Co.</a>
+    <nav class="header-nav">
+      <span class="issue-tag">No. 041–050</span>
+      <a href="#catalog" class="nav-link">The stack</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <h1>Ten books we couldn't stop pressing on friends.</h1>
+      <p class="hero-sub">Bindery &amp; Co. is a small print shop that reprints fiction, poetry, and essays we love enough to bind ourselves. This season's stack is numbered 041 through 050 — one shelf, ten copies each, gone when they're gone.</p>
+      <a href="#catalog" class="btn btn-primary">See the stack</a>
+    </div>
+    <svg class="stitch-divider" viewBox="0 0 1200 24" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="0" y1="12" x2="1200" y2="12" stroke="currentColor" stroke-width="2" stroke-dasharray="9 11"/>
+    </svg>
+  </section>
+
+  <section id="catalog" class="catalog">
+    <div class="wrap">
+      <div class="catalog-head">
+        <h2>The stack</h2>
+        <div class="filters" role="group" aria-label="Filter by kind">
+          <button class="filter-pill is-active" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-pill" data-filter="fiction" aria-pressed="false">Fiction</button>
+          <button class="filter-pill" data-filter="nonfiction" aria-pressed="false">Nonfiction</button>
+          <button class="filter-pill" data-filter="poetry" aria-pressed="false">Poetry</button>
+          <button class="filter-pill" data-filter="translated" aria-pressed="false">Translated</button>
+        </div>
+      </div>
+      <div id="grid" class="grid"></div>
+    </div>
+  </section>
+
+</main>
+
+<div id="modal" class="modal" hidden>
+  <div class="modal-backdrop" data-close></div>
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <button class="modal-close" type="button" data-close aria-label="Close">×</button>
+    <div class="modal-cover" id="modal-cover" aria-hidden="true"></div>
+    <div class="modal-body">
+      <p class="modal-number" id="modal-number"></p>
+      <h3 id="modal-title"></h3>
+      <p class="modal-author" id="modal-author"></p>
+      <p class="modal-blurb" id="modal-blurb"></p>
+      <div class="modal-footer">
+        <span class="modal-price" id="modal-price"></span>
+        <button class="btn btn-primary" id="modal-buy" type="button">Buy this book</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status" hidden></div>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p>Bindery &amp; Co. — set in Fraunces and Source Serif. Payments are handled securely by Stripe.</p>
+  </div>
+</footer>
+
+<script src="script.js" defer></script>
+</body>
+</html>
