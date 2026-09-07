@@ -2,7 +2,7 @@
  * Bindery & Co. — catalog data and Express backend Stripe integration
  */
 
-const BACKEND_URL = "http://localhost:4242";
+const BACKEND_URL = "https://pagecraftstore.onrender.com";
 
 const BOOKS = [
   {
