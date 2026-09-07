@@ -7,10 +7,10 @@ const BACKEND_URL = "http://localhost:4242";
 const BOOKS = [
   {
     number: "041",
-    title: "The Weight of Small Rooms",
+    title: "Beyond the Lens",
     author: "Elena Marsh",
     category: "fiction",
-    price: 67.00,
+    price: 69.50,
     color: "#7A2E22",
     blurb: "A woman inherits her grandmother's apartment and, one drawer at a time, the life she never asked about. Quiet, exact, and quietly devastating."
   },
@@ -176,35 +176,18 @@ async function checkout(book) {
       }),
     });
 
-    const session = await response.json();
+    const data = await response.json();
 
-    if (session.url) {
-      // Redirect to Stripe's payment page
-      window.location.href = session.url;
+    if (data.url) {
+      window.location.href = data.url;
     } else {
-      showToast(session.error || "Could not create checkout session.");
+      showToast(data.error || "Could not create checkout session.");
     }
   } catch (err) {
     console.error("Server Error:", err);
     showToast("Failed to connect to backend server on port 4242.");
   }
-}
-
-grid.addEventListener("click", (e) => {
-  const buyBtn = e.target.closest(".card-buy");
-  if (buyBtn) {
-    const index = Number(buyBtn.dataset.index);
-    checkout(BOOKS[index]);
-    return;
-  }
-
-  const cover = e.target.closest(".card-cover");
-  const title = e.target.closest(".card-title");
-  const trigger = cover || title;
-  if (trigger) {
-    openModal(Number(trigger.dataset.index));
-  }
-});
+};
 
 grid.addEventListener("keydown", (e) => {
   if ((e.key === "Enter" || e.key === " ") && e.target.classList.contains("card-cover")) {
@@ -254,3 +237,19 @@ document.addEventListener("keydown", (e) => {
 // Initial render
 renderGrid();
 applyFilter("all");
+
+// Listen for clicks on the Buy buttons generated in the grid
+grid.addEventListener("click", (e) => {
+  if (e.target.classList.contains("card-buy")) {
+    const index = e.target.dataset.index;
+    checkout(BOOKS[index]);
+  }
+});
+
+// Reveal PDF download if returning from a successful payment
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('success') === 'true') {
+  showToast("Payment successful! You can now download your book.");
+  const downloadSection = document.getElementById('pdf-download-section');
+  if (downloadSection) downloadSection.hidden = false;
+}

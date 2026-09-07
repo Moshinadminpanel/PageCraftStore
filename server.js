@@ -1,8 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const { Polar } = require("@polar-sh/sdk");
 
-// Ensure this is your SECRET KEY (starts with sk_test_ or sk_live_)
-const stripe = require('stripe')('sk_test_51U4ILJREDLicYAwlvciTn1t4246ZSarZZIoRycCdXf66csV0b7lt7TqDs5q3m0K6NY9m1UgRVvowUYNzgXWmIHzI00AceJn4eT');
+// Ensure this is your SECRET KEY (starts with polar_)
+// Make sure you have a .env file in the same folder with POLAR_ACCESS_TOKEN and POLAR_SUCCESS_URL
 
 const app = express();
 app.use(cors());
@@ -12,29 +14,22 @@ app.post('/create-checkout-session', async (req, res) => {
   const { title, price } = req.body;
 
   try {
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: 'usd',
-            product_data: {
-              name: title,
-            },
-            unit_amount: Math.round(price * 100),
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      success_url: `${req.headers.origin || 'http://localhost:3000'}?success=true`,
-      cancel_url: `${req.headers.origin || 'http://localhost:3000'}?canceled=true`,
+    const polar = new Polar({
+      accessToken: process.env.POLAR_ACCESS_TOKEN,
     });
 
-    res.json({ url: session.url });
+    const checkout = await polar.checkouts.create({
+      products: [
+            "70b86c86-7843-4ecf-88d3-791437e001c0"
+
+      ],
+      successUrl: process.env.POLAR_SUCCESS_URL // Ensure this URL ends with ?success=true
+    });
+
+    res.json({ url: checkout.url });
   } catch (e) {
     // Print the full error in your terminal to trace issues instantly
-    console.error("Stripe Error Details:", e.message);
+    console.error("Polar API Error Details:", e.message);
     res.status(500).json({ error: e.message });
   }
 });
