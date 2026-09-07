@@ -10,7 +10,7 @@ const BOOKS = [
     title: "Beyond the Lens",
     author: "Elena Marsh",
     category: "fiction",
-    price: 69.50,
+    price: 21.00,
     color: "#7A2E22",
     blurb: "A woman inherits her grandmother's apartment and, one drawer at a time, the life she never asked about. Quiet, exact, and quietly devastating."
   },
